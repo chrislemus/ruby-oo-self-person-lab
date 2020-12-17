@@ -4,6 +4,7 @@ require 'pry'
 class Person
   attr_accessor :bank_account, :happiness, :hygiene
   attr_reader :name
+
   def initialize(name)
     @name = name
     @bank_account = 25
@@ -11,14 +12,10 @@ class Person
     @hygiene = 8
   end
   def happiness=(happiness)
-    @happiness = happiness if happiness.between?(0, 10) 
-    @happiness = 10 if happiness > 10
-    @happiness = 0 if happiness < 0
+    @happiness = happiness.clamp(0, 10)
   end
   def hygiene=(hygiene)
-    @hygiene = hygiene if hygiene.between?(0, 10) 
-    @hygiene = 10 if hygiene > 10
-    @hygiene = 0 if hygiene < 0
+    @hygiene = hygiene.clamp(0, 10)
   end
   def happy?
     @happiness > 7
@@ -40,7 +37,6 @@ class Person
     "♪ another one bites the dust ♫"
   end
   def call_friend(friend)
-    # binding.pry
     self.happiness += 3
     friend.happiness += 3
     "Hi #{friend.name}! It's #{@name}. How are you?"
